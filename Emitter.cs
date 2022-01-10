@@ -13,6 +13,9 @@ namespace Coursework
         public int mousePositionX;
         public int mousePositionY;
 
+        public float gravitationX = 0;
+        public float gravitationY = 1;
+
         public void UpdateState ()
         {
 
@@ -35,6 +38,9 @@ namespace Coursework
                 }
                 else
                 {
+                    particle.speedX += gravitationX;
+                    particle.speedY += gravitationY;
+
                     particle.x += particle.speedX;
                     particle.y += particle.speedY;
                 }
