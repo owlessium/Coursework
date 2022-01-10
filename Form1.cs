@@ -12,84 +12,30 @@ namespace Coursework
 {
     public partial class Form1 : Form
     {
-        List<Particle> particles = new List<Particle>();
+        Emitter emitter = new Emitter();
         public Form1()
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
         }
         
-        private void UpdateState()
+       private void timer1_Tick(object sender, EventArgs e)
         {
-            foreach (var particle in particles)
-            {
-                particle.life -= 1;
-                if (particle.life < 0)
-                {
-                    particle.life = 20 + Particle.rand.Next(100);
-                    particle.x = mousePositionX;
-                    particle.y = mousePositionY;
-
-                    var direction = (double) Particle.rand.Next(360);
-                    var speed = 1 + Particle.rand.Next(10);
-
-                    particle.speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
-                    particle.speedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-
-                    particle.radius = 2 + Particle.rand.Next(10);
-                } else {
-                    particle.x += particle.speedX;
-                    particle.y += particle.speedY;
-                }                
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (particles.Count < 500)
-                {
-                    var particle = new ParticleColorful ();
-                    particle.fromColor = Color.BlueViolet;
-                    particle.toColor = Color.FromArgb(0, Color.Maroon);
-                    particle.x = mousePositionX;
-                    particle.y = mousePositionY;
-                    particles.Add(particle);
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-
-        private void Render (Graphics g)
-        {
-            foreach (var particle in particles)
-            {
-                particle.Draw(g);
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            UpdateState();
+            emitter.UpdateState();
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.Clear(Color.Black);
-                Render(g);
+                emitter.Render(g);
             }
 
             picDisplay.Invalidate();
         }
 
-        //переменные для хранения положения мыши
-        private int mousePositionX = 0;
-        private int mousePositionY = 0;
-
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            mousePositionX = e.X;
-            mousePositionY = e.Y;
+            emitter.mousePositionX = e.X;
+            emitter.mousePositionY = e.Y;
         }
     }
 }
