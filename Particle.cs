@@ -13,16 +13,20 @@ namespace Coursework
         public float x; //координата движения в пространстве
         public float y; //координата движения в пространстве
 
-        public float direction; // направление движения (а-ля угол)
-        public float speed; // скорость перемещения
+        public float speedX; // скорость перемещения по оси X
+        public float speedY; // скорость перемещения по оси Y
         public float life; //запас здоровья частицы
 
         public static Random rand = new Random();
 
         public Particle ()
         {
-            direction = rand.Next(360);
-            speed = 1 + rand.Next(10);
+            var direction = (double) rand.Next(360);
+            var speed = 1 + rand.Next(10);
+
+            speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            speedY = - (float)(Math.Sin(direction / 180 * Math.PI) * speed);
+
             radius = 2 + rand.Next(10);
             life = 20 + rand.Next(100);
         }

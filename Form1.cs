@@ -29,13 +29,17 @@ namespace Coursework
                     particle.life = 20 + Particle.rand.Next(100);
                     particle.x = mousePositionX;
                     particle.y = mousePositionY;
-                    particle.direction = Particle.rand.Next(360);
-                    particle.speed = 1 + Particle.rand.Next(10);
+
+                    var direction = (double) Particle.rand.Next(360);
+                    var speed = 1 + Particle.rand.Next(10);
+
+                    particle.speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+                    particle.speedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+
                     particle.radius = 2 + Particle.rand.Next(10);
                 } else {
-                    var directionInRadians = particle.direction / 180 * Math.PI;
-                    particle.x += (float)(particle.speed * Math.Cos(directionInRadians));
-                    particle.y += (float)(particle.speed * Math.Sin(directionInRadians));
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
                 }                
             }
 
