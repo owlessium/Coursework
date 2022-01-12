@@ -14,7 +14,9 @@ namespace Coursework
         public int mousePositionY;
 
         public float gravitationX = 0;
-        public float gravitationY = 1;
+        public float gravitationY = 0;
+
+        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
 
         public void UpdateState ()
         {
@@ -38,6 +40,12 @@ namespace Coursework
                 }
                 else
                 {
+
+                    foreach (var point in impactPoints)
+                    {
+                        point.ImpactParticle(particle);
+                    }
+                    
                     particle.speedX += gravitationX;
                     particle.speedY += gravitationY;
 
@@ -69,6 +77,11 @@ namespace Coursework
             foreach (var particle in particles)
             {
                 particle.Draw(g);
+            }
+
+            foreach (var point in impactPoints)
+            {
+                point.Render(g);
             }
         }
     }

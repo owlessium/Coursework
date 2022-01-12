@@ -17,6 +17,22 @@ namespace Coursework
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
+
+            emitter.impactPoints.Add(new GravityPoint 
+                {
+                    x = (float)(picDisplay.Width * 0.25),
+                    y = picDisplay.Height / 2
+                });
+            emitter.impactPoints.Add(new AntiGravityPoint
+            {
+                x = picDisplay.Width / 2,
+                y = picDisplay.Height / 2
+            });
+            emitter.impactPoints.Add(new GravityPoint
+                {
+                    x = (float)(picDisplay.Width * 0.75),
+                    y = picDisplay.Height / 2
+                }); 
         }
         
        private void timer1_Tick(object sender, EventArgs e)
