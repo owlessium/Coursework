@@ -35,8 +35,16 @@ namespace Coursework
             this.tbDirection = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbGraviton = new System.Windows.Forms.TrackBar();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbGraviton1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton1)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
@@ -80,11 +88,69 @@ namespace Coursework
             this.lblDirection.Size = new System.Drawing.Size(0, 20);
             this.lblDirection.TabIndex = 3;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1349, 160);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 20);
+            this.label2.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1095, 126);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(286, 20);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Размер первой области притяжения";
+            // 
+            // tbGraviton
+            // 
+            this.tbGraviton.Location = new System.Drawing.Point(1084, 160);
+            this.tbGraviton.Maximum = 200;
+            this.tbGraviton.Name = "tbGraviton";
+            this.tbGraviton.Size = new System.Drawing.Size(259, 69);
+            this.tbGraviton.TabIndex = 4;
+            this.tbGraviton.Scroll += new System.EventHandler(this.tbGravitol_Scroll);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1349, 243);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 20);
+            this.label4.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1095, 209);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(286, 20);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Размер второй области притяжения";
+            // 
+            // tbGraviton1
+            // 
+            this.tbGraviton1.Location = new System.Drawing.Point(1084, 243);
+            this.tbGraviton1.Maximum = 200;
+            this.tbGraviton1.Name = "tbGraviton1";
+            this.tbGraviton1.Size = new System.Drawing.Size(259, 69);
+            this.tbGraviton1.TabIndex = 7;
+            this.tbGraviton1.Scroll += new System.EventHandler(this.tbGraviton1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1402, 664);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tbGraviton1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.tbGraviton);
             this.Controls.Add(this.lblDirection);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbDirection);
@@ -93,6 +159,8 @@ namespace Coursework
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,6 +173,12 @@ namespace Coursework
         private System.Windows.Forms.TrackBar tbDirection;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblDirection;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar tbGraviton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TrackBar tbGraviton1;
     }
 }
 

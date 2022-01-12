@@ -15,6 +15,9 @@ namespace Coursework
         List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
 
+        GravityPoint point1;
+        GravityPoint point2;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,28 +37,26 @@ namespace Coursework
             };
 
             emitters.Add(this.emitter);
-            /*
-            emitter = new TopEmitter
+
+            /*emitter = new TopEmitter
             {
                 width = picDisplay.Width,
                 gravitationY = 0.25f
+            };*/
+
+            point1 = new GravityPoint
+            {
+                x = picDisplay.Width / 2 + 150,
+                y = picDisplay.Height / 2,
+            };
+            point2 = new GravityPoint
+            {
+                x = picDisplay.Width / 2 - 150,
+                y = picDisplay.Height / 2,
             };
 
-            emitter.impactPoints.Add(new GravityPoint 
-                {
-                    x = (float)(picDisplay.Width * 0.25),
-                    y = picDisplay.Height / 2
-                });
-            emitter.impactPoints.Add(new AntiGravityPoint
-            {
-                x = picDisplay.Width / 2,
-                y = picDisplay.Height / 2
-            });
-            emitter.impactPoints.Add(new GravityPoint
-                {
-                    x = (float)(picDisplay.Width * 0.75),
-                    y = picDisplay.Height / 2
-                }); */
+            emitter.impactPoints.Add(point1);
+            emitter.impactPoints.Add(point2);
         }
         
        private void timer1_Tick(object sender, EventArgs e)
@@ -81,6 +82,16 @@ namespace Coursework
         {
             emitter.Direction = tbDirection.Value;
             lblDirection.Text = $"{tbDirection.Value}°";
+        }
+
+        private void tbGravitol_Scroll(object sender, EventArgs e)
+        {
+            point1.power = tbGraviton.Value;
+        }
+
+        private void tbGraviton1_Scroll(object sender, EventArgs e)
+        {
+            point2.power = tbGraviton1.Value;
         }
     }
 }

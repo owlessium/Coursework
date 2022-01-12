@@ -19,5 +19,10 @@ namespace Coursework
             particle.speedX += gX * power / r2;
             particle.speedY += gY * power / r2;
         }
+
+        public override void Render(Graphics g)
+        {
+            g.DrawEllipse(new Pen(Color.Yellow), x - power / 2, y - power / 2, power, power);
+        }
     }
 }
