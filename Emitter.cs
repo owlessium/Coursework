@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Coursework
 {
-    class Emitter
+    public class Emitter
     {
         List<Particle> particles = new List<Particle>();
         public int mousePositionX;
@@ -18,6 +18,22 @@ namespace Coursework
 
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
 
+        public int particlesCount = 500;
+
+        public virtual void ResetParticle (Particle particle)
+        {
+            particle.life = 20 + Particle.rand.Next(100);
+            particle.x = mousePositionX;
+            particle.y = mousePositionY;
+
+            var direction = (double)Particle.rand.Next(360);
+            var speed = 1 + Particle.rand.Next(10);
+
+            particle.speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            particle.speedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+
+            particle.radius = 2 + Particle.rand.Next(10);
+        }
         public void UpdateState ()
         {
 
@@ -26,17 +42,7 @@ namespace Coursework
                 particle.life -= 1;
                 if (particle.life < 0)
                 {
-                    particle.life = 20 + Particle.rand.Next(100);
-                    particle.x = mousePositionX;
-                    particle.y = mousePositionY;
-
-                    var direction = (double)Particle.rand.Next(360);
-                    var speed = 1 + Particle.rand.Next(10);
-
-                    particle.speedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
-                    particle.speedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-
-                    particle.radius = 2 + Particle.rand.Next(10);
+                    ResetParticle(particle);
                 }
                 else
                 {
@@ -56,13 +62,12 @@ namespace Coursework
 
             for (int i = 0; i < 10; i++)
             {
-                if (particles.Count < 500)
+                if (particles.Count < particlesCount)
                 {
                     var particle = new ParticleColorful();
                     particle.fromColor = Color.BlueViolet;
                     particle.toColor = Color.FromArgb(0, Color.Maroon);
-                    particle.x = mousePositionX;
-                    particle.y = mousePositionY;
+                    ResetParticle(particle);
                     particles.Add(particle);
                 }
                 else
