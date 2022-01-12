@@ -12,6 +12,7 @@ namespace Coursework
 {
     public partial class Form1 : Form
     {
+        List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
 
         public Form1()
@@ -19,6 +20,21 @@ namespace Coursework
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
+            this.emitter = new Emitter
+            {
+                Direction = 0,
+                spreading = 10,
+                speedMin = 10,
+                speedMax = 10,
+                colorFrom = Color.DarkViolet,
+                colorTo = Color.FromArgb(0, Color.Maroon),
+                particlesPerTick = 10,
+                x = picDisplay.Width / 2,
+                y = picDisplay.Height / 2,
+            };
+
+            emitters.Add(this.emitter);
+            /*
             emitter = new TopEmitter
             {
                 width = picDisplay.Width,
@@ -39,7 +55,7 @@ namespace Coursework
                 {
                     x = (float)(picDisplay.Width * 0.75),
                     y = picDisplay.Height / 2
-                }); 
+                }); */
         }
         
        private void timer1_Tick(object sender, EventArgs e)
@@ -59,6 +75,12 @@ namespace Coursework
         {
             emitter.mousePositionX = e.X;
             emitter.mousePositionY = e.Y;
+        }
+
+        private void tbDirection_Scroll(object sender, EventArgs e)
+        {
+            emitter.Direction = tbDirection.Value;
+            lblDirection.Text = $"{tbDirection.Value}°";
         }
     }
 }
