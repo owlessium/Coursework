@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Coursework
 {
-    public class Emitter
+    public class Emitter : OverlapableObject
     {
         List<Particle> particles = new List<Particle>();
 
-        public int x;
-        public int y;
         public int Direction = 0;
         public int spreading = 360;
         public int speedMin = 1;
@@ -22,6 +21,8 @@ namespace Coursework
         public int lifeMin = 20;
         public int lifeMax = 100;
 
+        public int health = 100;
+
         public int particlesPerTick = 1;
 
         public Color colorFrom = Color.DarkViolet;
@@ -29,6 +30,8 @@ namespace Coursework
 
         public int mousePositionX;
         public int mousePositionY;
+
+        public Enemy enemy;
 
         public float gravitationX = 0;
         public float gravitationY = 0;
@@ -73,19 +76,20 @@ namespace Coursework
                         particlesToCreate -= 1;
                         ResetParticle(particle);
                     }
-                } 
+                }
                 else
                 {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+
+                    particle.life -= 1;
                     foreach (var point in impactPoints)
                     {
                         point.ImpactParticle(particle);
                     }
 
                     particle.speedX += gravitationX;
-                    particle.speedY += gravitationY;
-
-                    particle.x += particle.speedX;
-                    particle.y += particle.speedY;
+                    particle.speedY += gravitationY;                  
                 }
             }
 
@@ -95,6 +99,18 @@ namespace Coursework
                 var particle = CreateParticle();
                 ResetParticle(particle);
                 particles.Add(particle);
+            }
+        }
+
+        public void checkHitEnemy(Graphics g, Enemy enemy)
+        {
+            foreach (var particle in particles.ToArray())
+            {
+                if (particle.Overlaps(enemy, g))
+                {
+                    enemy.applyDamage(particle.damage);
+                    particles.Remove(particle);
+                }
             }
         }
 
@@ -109,6 +125,24 @@ namespace Coursework
             {
                 point.Render(g);
             }
+
+            DrawHouse(g);
+        }
+
+        private void DrawHouse(Graphics g)
+        {
+            g.DrawRectangle(new Pen(Color.Red), new Rectangle((int)x - 25, (int)y - 25, 50, 50));
+            g.FillEllipse(new SolidBrush(Color.Red), x - 10, y - 10, 20, 20);
+            g.FillRectangle(new SolidBrush(Color.Green), x - 25, y - 30, health/2, 4);
+        }
+
+        protected override GraphicsPath GetGraphicsPath()
+        {
+            var path = new GraphicsPath();
+
+            path.AddRectangle(new Rectangle(-25, -25, 50, 50));
+
+            return path;
         }
     }
 }

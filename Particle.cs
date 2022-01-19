@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Coursework
 {
-    public class Particle
+    public class Particle : OverlapableObject
     {
         public int radius; //радиус частицы
-        public float x; //координата движения в пространстве
-        public float y; //координата движения в пространстве
 
         public float speedX; // скорость перемещения по оси X
         public float speedY; // скорость перемещения по оси Y
         public float life; //запас здоровья частицы
+
+        public int damage;
 
         public static Random rand = new Random();
 
@@ -29,6 +30,8 @@ namespace Coursework
 
             radius = 2 + rand.Next(10);
             life = 20 + rand.Next(100);
+
+            damage = 1 + rand.Next(3);
         }
 
         public virtual void Draw (Graphics g)
@@ -42,6 +45,15 @@ namespace Coursework
             g.FillEllipse(b, x - radius, y - radius, radius * 2, radius * 2);
 
             b.Dispose();
+        }
+
+        protected override GraphicsPath GetGraphicsPath()
+        {
+            var path = new GraphicsPath();
+
+            path.AddEllipse(0 - radius, 0 - radius, radius * 2, radius * 2);
+
+            return path;
         }
     }
 

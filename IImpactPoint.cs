@@ -11,12 +11,13 @@ namespace Coursework
     {
         public float x;
         public float y;
+        public Color color;
 
         public abstract void ImpactParticle(Particle particle);
 
         public virtual void Render (Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Yellow), x - 5, y - 5, 10, 10);
+            g.FillEllipse(new SolidBrush(color), x - 5, y - 5, 10, 10);
         }
     }
 }

@@ -10,20 +10,37 @@ using System.Windows.Forms;
 
 namespace Coursework
 {
-    public partial class Form1 : Form
+    public partial class FreezSpelButton : Form
     {
         List<Emitter> emitters = new List<Emitter>();
         Emitter emitter;
 
-        GravityPoint point1;
-        GravityPoint point2;
+        GravityPoint selectedGraviton = null;
 
-        public Form1()
+        public static Random rand = new Random();
+
+        Enemy enemy;
+
+        int points = 0;
+
+        double freezTimer = 0.0;
+
+        bool isMousePressed = false;
+
+        public enum Direction
+        {
+            Вверх,
+            Вниз,
+            Влево,
+            Вправо
+        }
+
+        public FreezSpelButton()
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            this.emitter = new Emitter
+            emitter = new Emitter
             {
                 Direction = 0,
                 spreading = 10,
@@ -36,7 +53,7 @@ namespace Coursework
                 y = picDisplay.Height / 2,
             };
 
-            emitters.Add(this.emitter);
+            emitters.Add(emitter);
 
             /*emitter = new TopEmitter
             {
@@ -44,54 +61,235 @@ namespace Coursework
                 gravitationY = 0.25f
             };*/
 
-            point1 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 + 150,
-                y = picDisplay.Height / 2,
-            };
-            point2 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 - 150,
-                y = picDisplay.Height / 2,
-            };
+            directionBox.DataSource = Enum.GetValues(typeof(Direction));
+            changeDirection();
 
-            emitter.impactPoints.Add(point1);
-            emitter.impactPoints.Add(point2);
+            initEnemy();
+            addGraviton();
+        }
+
+        private void addPoints()
+        {
+            points += enemy.reward;
+        }
+
+        private void initEnemy()
+        {
+            enemy = new Enemy();
+            enemy.OnDead += addPoints;
+            enemy.OnDead += respawnEnemy;
+
+            respawnEnemy();
+        }
+
+        private void respawnEnemy()
+        {
+            Tuple<int, int> pos = getRespawnPos();
+
+            enemy.x = pos.Item1;
+            enemy.y = pos.Item2;
+            enemy.life = 250;
+            enemy.reward = 10 + rand.Next(15);
+        }
+
+        private Tuple<int,int> getRespawnPos()
+        {
+            int x = 0;
+            int y = 0;
+
+            if (rand.Next(2) == 0)
+            {
+                y = rand.Next(picDisplay.Height);
+            }
+            else
+            {
+                x = rand.Next(picDisplay.Width);
+            }
+
+            return Tuple.Create(x, y);
         }
         
-       private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
+            Points.Text = $"Количество очков {points}";
+
             emitter.UpdateState();
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.Clear(Color.Black);
+
                 emitter.Render(g);
+                emitter.checkHitEnemy(g, enemy);
+                enemy.Draw(g);
+
+                if (enemy.Overlaps(emitter, g))
+                {
+                    emitter.health -= 10;
+                    
+                    if (emitter.health <= 0)
+                    {
+                        timer1.Enabled = false;
+                        
+                        MessageBox.Show("ПОРАЖЕНИЕ!");
+                    }
+                    
+                    respawnEnemy();
+                }
             }
+
+            enemy.MoveTo(emitter);
+
+            if (freezTimer > 0.40) 
+                freezTimer -= (double)timer1.Interval / 1000;
+            else 
+                freezTimer = 0.0;
+
+            FreezTimer.Text = $"{Math.Round(freezTimer, 1)}";
+
+            
 
             picDisplay.Invalidate();
         }
 
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            emitter.mousePositionX = e.X;
-            emitter.mousePositionY = e.Y;
+            if (isMousePressed)
+            {
+                selectedGraviton.x = e.X;
+                selectedGraviton.y = e.Y;
+            }
         }
 
-        private void tbDirection_Scroll(object sender, EventArgs e)
+        private void changeDirection()
         {
-            emitter.Direction = tbDirection.Value;
-            lblDirection.Text = $"{tbDirection.Value}°";
+            switch (directionBox.SelectedItem)
+            {
+                case Direction.Вверх:
+                    emitter.Direction = 90;
+                    break;
+                case Direction.Вниз:
+                    emitter.Direction = 270;
+                    break;
+                case Direction.Влево:
+                    emitter.Direction = 180;
+                    break;
+                case Direction.Вправо:
+                    emitter.Direction = 0;
+                    break;
+            }
         }
 
-        private void tbGravitol_Scroll(object sender, EventArgs e)
+        private void addGravitonButton_Click(object sender, EventArgs e)
         {
-            point1.power = tbGraviton.Value;
+            addGraviton();
         }
 
-        private void tbGraviton1_Scroll(object sender, EventArgs e)
+        private void addGraviton()
         {
-            point2.power = tbGraviton1.Value;
+            var point = new GravityPoint
+            {
+                x = picDisplay.Width / 2,
+                y = picDisplay.Height / 2,
+                color = Color.Yellow
+            };
+
+            selectGraviton(point);
+
+            emitter.impactPoints.Add(point);
+        }
+
+        private void tbGraviton_Scroll(object sender, EventArgs e)
+        {
+            if (selectedGraviton != null)
+                selectedGraviton.power = tbGraviton.Value;
+        }
+
+        private void picDisplay_MouseDown(object sender, MouseEventArgs e)
+        {
+            foreach (var point in emitter.impactPoints)
+            {
+                var graviton = point as GravityPoint;
+                if (clickOnGraviton(e.X, e.Y, graviton))
+                {
+                    selectGraviton(graviton);
+                    isMousePressed = true;
+                    return;
+                }
+            }
+        }
+
+        private void selectGraviton(GravityPoint graviton)
+        {
+            if (selectedGraviton != null)
+                selectedGraviton.color = Color.Yellow;
+
+            selectedGraviton = graviton;
+            selectedGraviton.color = Color.White;
+        }
+
+        private bool clickOnGraviton(float mouseX, float mouseY, GravityPoint graviton) 
+        {
+            return Math.Pow(mouseX - graviton.x, 2) +
+                   Math.Pow(mouseY - graviton.y, 2) <= Math.Pow(graviton.power / 2, 2);
+        }
+
+        private void picDisplay_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMousePressed = false;
+        }
+
+        private void delGravitonButton_Click(object sender, EventArgs e)
+        {
+            if (selectedGraviton != null)
+            {
+                emitter.impactPoints.Remove(selectedGraviton);
+                selectedGraviton = null;
+            }
+        }
+
+        private void directionBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            changeDirection();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    directionBox.SelectedIndex = 0;
+                    break;
+                case Keys.S:
+                    directionBox.SelectedIndex = 1;
+                    break;
+                case Keys.A:
+                    directionBox.SelectedIndex = 2;
+                    break;
+                case Keys.D:
+                    directionBox.SelectedIndex = 3;
+                    break;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            freezEnemy();
+        }
+
+        private void freezEnemy()
+        {
+            freezTimer = 5;
+            if (freezTimer != 0.0)
+            {
+                enemy.isFreez = true;
+            }
+            
+        }
+
+        private void FreezTimer_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

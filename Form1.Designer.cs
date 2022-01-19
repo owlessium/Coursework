@@ -1,7 +1,7 @@
 ﻿
 namespace Coursework
 {
-    partial class Form1
+    partial class FreezSpelButton
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -32,29 +32,33 @@ namespace Coursework
             this.components = new System.ComponentModel.Container();
             this.picDisplay = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tbDirection = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.addGravitonButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbGraviton = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbGraviton1 = new System.Windows.Forms.TrackBar();
+            this.tbGraviton = new System.Windows.Forms.TrackBar();
+            this.delGravitonButton = new System.Windows.Forms.Button();
+            this.directionBox = new System.Windows.Forms.ComboBox();
+            this.Points = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.FreezTimer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbGraviton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton1)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
             // 
-            this.picDisplay.Location = new System.Drawing.Point(7, 7);
+            this.picDisplay.Location = new System.Drawing.Point(5, 5);
+            this.picDisplay.Margin = new System.Windows.Forms.Padding(2);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(1071, 649);
+            this.picDisplay.Size = new System.Drawing.Size(714, 422);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
+            this.picDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseDown);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
+            this.picDisplay.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseUp);
             // 
             // timer1
             // 
@@ -62,105 +66,150 @@ namespace Coursework
             this.timer1.Interval = 40;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tbDirection
-            // 
-            this.tbDirection.Location = new System.Drawing.Point(1084, 54);
-            this.tbDirection.Maximum = 359;
-            this.tbDirection.Name = "tbDirection";
-            this.tbDirection.Size = new System.Drawing.Size(259, 69);
-            this.tbDirection.TabIndex = 1;
-            this.tbDirection.Scroll += new System.EventHandler(this.tbDirection_Scroll);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1095, 20);
+            this.label1.Location = new System.Drawing.Point(730, 13);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 20);
+            this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Направление";
             // 
             // lblDirection
             // 
             this.lblDirection.AutoSize = true;
-            this.lblDirection.Location = new System.Drawing.Point(1349, 54);
+            this.lblDirection.Location = new System.Drawing.Point(899, 35);
+            this.lblDirection.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDirection.Name = "lblDirection";
-            this.lblDirection.Size = new System.Drawing.Size(0, 20);
+            this.lblDirection.Size = new System.Drawing.Size(0, 13);
             this.lblDirection.TabIndex = 3;
             // 
-            // label2
+            // addGravitonButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1349, 160);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 20);
-            this.label2.TabIndex = 6;
+            this.addGravitonButton.Location = new System.Drawing.Point(733, 145);
+            this.addGravitonButton.Name = "addGravitonButton";
+            this.addGravitonButton.Size = new System.Drawing.Size(190, 38);
+            this.addGravitonButton.TabIndex = 10;
+            this.addGravitonButton.Text = "Добавить гравитон";
+            this.addGravitonButton.UseVisualStyleBackColor = true;
+            this.addGravitonButton.Click += new System.EventHandler(this.addGravitonButton_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1095, 126);
+            this.label3.Location = new System.Drawing.Point(730, 82);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(286, 20);
+            this.label3.Size = new System.Drawing.Size(165, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Размер первой области притяжения";
+            this.label3.Text = "Размер выбранного гравитона";
             // 
-            // tbGraviton
+            // label2
             // 
-            this.tbGraviton.Location = new System.Drawing.Point(1084, 160);
-            this.tbGraviton.Maximum = 200;
-            this.tbGraviton.Name = "tbGraviton";
-            this.tbGraviton.Size = new System.Drawing.Size(259, 69);
-            this.tbGraviton.TabIndex = 4;
-            this.tbGraviton.Scroll += new System.EventHandler(this.tbGravitol_Scroll);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(899, 104);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 13);
+            this.label2.TabIndex = 6;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1349, 243);
+            this.label4.Location = new System.Drawing.Point(899, 158);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 20);
+            this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 9;
             // 
-            // label5
+            // tbGraviton
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1095, 209);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(286, 20);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Размер второй области притяжения";
+            this.tbGraviton.Location = new System.Drawing.Point(723, 104);
+            this.tbGraviton.Margin = new System.Windows.Forms.Padding(2);
+            this.tbGraviton.Maximum = 200;
+            this.tbGraviton.Name = "tbGraviton";
+            this.tbGraviton.Size = new System.Drawing.Size(173, 69);
+            this.tbGraviton.TabIndex = 4;
+            this.tbGraviton.Scroll += new System.EventHandler(this.tbGraviton_Scroll);
             // 
-            // tbGraviton1
+            // delGravitonButton
             // 
-            this.tbGraviton1.Location = new System.Drawing.Point(1084, 243);
-            this.tbGraviton1.Maximum = 200;
-            this.tbGraviton1.Name = "tbGraviton1";
-            this.tbGraviton1.Size = new System.Drawing.Size(259, 69);
-            this.tbGraviton1.TabIndex = 7;
-            this.tbGraviton1.Scroll += new System.EventHandler(this.tbGraviton1_Scroll);
+            this.delGravitonButton.Location = new System.Drawing.Point(733, 189);
+            this.delGravitonButton.Name = "delGravitonButton";
+            this.delGravitonButton.Size = new System.Drawing.Size(190, 38);
+            this.delGravitonButton.TabIndex = 11;
+            this.delGravitonButton.Text = "Удалить гравитон";
+            this.delGravitonButton.UseVisualStyleBackColor = true;
+            this.delGravitonButton.Click += new System.EventHandler(this.delGravitonButton_Click);
             // 
-            // Form1
+            // directionBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.directionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.directionBox.FormattingEnabled = true;
+            this.directionBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.directionBox.Location = new System.Drawing.Point(733, 35);
+            this.directionBox.Name = "directionBox";
+            this.directionBox.Size = new System.Drawing.Size(121, 21);
+            this.directionBox.TabIndex = 12;
+            this.directionBox.SelectedIndexChanged += new System.EventHandler(this.directionBox_SelectedIndexChanged);
+            // 
+            // Points
+            // 
+            this.Points.AutoSize = true;
+            this.Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.Points.Location = new System.Drawing.Point(547, 13);
+            this.Points.Name = "Points";
+            this.Points.Size = new System.Drawing.Size(192, 25);
+            this.Points.TabIndex = 13;
+            this.Points.Text = "Количество очков";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(733, 383);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 37);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Заморозить поле боя!";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // FreezTimer
+            // 
+            this.FreezTimer.AutoSize = true;
+            this.FreezTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
+            this.FreezTimer.Location = new System.Drawing.Point(860, 383);
+            this.FreezTimer.Name = "FreezTimer";
+            this.FreezTimer.Size = new System.Drawing.Size(77, 47);
+            this.FreezTimer.TabIndex = 15;
+            this.FreezTimer.Text = "0.0";
+            this.FreezTimer.Click += new System.EventHandler(this.FreezTimer_Click);
+            // 
+            // FreezSpelButton
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1402, 664);
+            this.ClientSize = new System.Drawing.Size(935, 432);
+            this.Controls.Add(this.FreezTimer);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Points);
+            this.Controls.Add(this.directionBox);
+            this.Controls.Add(this.delGravitonButton);
+            this.Controls.Add(this.addGravitonButton);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbGraviton1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbGraviton);
             this.Controls.Add(this.lblDirection);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.tbDirection);
             this.Controls.Add(this.picDisplay);
-            this.Name = "Form1";
+            this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "FreezSpelButton";
             this.Text = "Form1";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbGraviton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGraviton1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,15 +219,18 @@ namespace Coursework
 
         private System.Windows.Forms.PictureBox picDisplay;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TrackBar tbDirection;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblDirection;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button addGravitonButton;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TrackBar tbGraviton;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TrackBar tbGraviton1;
+        private System.Windows.Forms.TrackBar tbGraviton;
+        private System.Windows.Forms.Button delGravitonButton;
+        private System.Windows.Forms.ComboBox directionBox;
+        private System.Windows.Forms.Label Points;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label FreezTimer;
     }
 }
 
