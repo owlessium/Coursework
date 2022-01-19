@@ -90,6 +90,7 @@ namespace Coursework
             enemy.y = pos.Item2;
             enemy.life = 250;
             enemy.reward = 10 + rand.Next(15);
+            enemy.isFreez = false;
         }
 
         private Tuple<int,int> getRespawnPos()
@@ -279,12 +280,11 @@ namespace Coursework
 
         private void freezEnemy()
         {
-            freezTimer = 5;
-            if (freezTimer != 0.0)
+            if (freezTimer == 0.0)
             {
                 enemy.isFreez = true;
             }
-            
+            freezTimer = 10;
         }
 
         private void FreezTimer_Click(object sender, EventArgs e)
